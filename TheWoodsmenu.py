@@ -23,6 +23,29 @@ woods = font.render("The Woods", True, RED)
 # Center the text
 text_rect = woods.get_rect()
 text_rect.center = win.get_rect().center
+#Rusable Button function
+class Button:
+    def __init__(self, x, y, width, height, text, font, base_color, hover_color, text_color):
+        self.rect = pygame.Rect(x, y, width, height)
+        self.text = font.render(text, True, text_color)
+        self.base_color = base_color
+        self.hover_color = hover_color
+        self.text_pos = (
+            x + (width - self.text.get_width()) // 2,
+            y + (height - self.text.get_height()) // 2
+        )
+
+    def draw(self, surface):
+        mouse_pos = pygame.mouse.get_pos()
+        color = self.hover_color if self.rect.collidepoint(mouse_pos) else self.base_color
+        pygame.draw.rect(surface, color, self.rect)
+        surface.blit(self.text, self.text_pos)
+
+    def is_clicked(self):
+        return self.rect.collidepoint(pygame.mouse.get_pos()) and pygame.mouse.get_pressed()[0]
+    
+# Create a button instance
+
 # Main loop
 done = False
 clock = pygame.time.Clock()
